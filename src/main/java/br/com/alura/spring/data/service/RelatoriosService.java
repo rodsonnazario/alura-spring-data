@@ -8,6 +8,7 @@ import java.util.Scanner;
 import org.springframework.stereotype.Service;
 
 import br.com.alura.spring.data.orm.Funcionario;
+import br.com.alura.spring.data.orm.FuncionarioDto;
 import br.com.alura.spring.data.repository.FuncionarioRepository;
 
 @Service
@@ -29,6 +30,7 @@ public class RelatoriosService {
 			System.out.println("1 - Busca funcionario nome");
 			System.out.println("2 - Busca funcionario nome, data contratacao e salario maior");
 			System.out.println("3 - Busca funcionario data contratacao maior");
+			System.out.println("4 - Busca funcionario salario");
 
 			int action = scanner.nextInt();
 			switch (action) {
@@ -40,6 +42,9 @@ public class RelatoriosService {
 				break;
 			case 3:
 				buscaFuncionarioDataContratacaoMaior(scanner);
+				break;
+			case 4:
+				buscaFuncionarioSalario();
 				break;
 			default:
 				system = false;
@@ -80,6 +85,13 @@ public class RelatoriosService {
 		
 		List<Funcionario> funcionarios = funcionarioRepository.findDataContratacaoMaior(dataContratacao);
 		funcionarios.forEach(System.out::println);		
+	}
+	
+	private void buscaFuncionarioSalario() {
+		List<FuncionarioDto> funcionarios = funcionarioRepository.findFuncionarioSalario();				
+		funcionarios.forEach(f -> {
+			System.out.println("Funcionario: " + f.getId() + " | nome: " + f.getNome() + " | salario: " + f.getSalario());
+		});		
 	}
 
 }
